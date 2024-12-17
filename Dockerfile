@@ -1,21 +1,14 @@
-# Step 1: Use an official OpenJDK base image
+# Use OpenJDK as base image
 FROM openjdk:17-jdk-slim
 
-# Step 2: Install Maven
-RUN apt-get update && apt-get install -y maven && apt-get clean
+# Set the working directory
+WORKDIR /app
 
-# Step 3: Set the working directory in the container
-WORKDIR /usr/app
+# Copy the JAR file into the container
+COPY target/my-spring-app.jar app.jar
 
-# Step 4: Copy the Maven project files into the container
-COPY pom.xml /usr/app/
-COPY src /usr/app/src/
-
-# Step 5: Build the application using Maven
-RUN mvn clean install -DskipTests
-
-# Step 6: Expose the port (if you want to run a web application, for example)
+# Expose application port
 EXPOSE 8080
 
-# Step 7: Command to run the application (assuming it's a Spring Boot app or any other Java app)
-ENTRYPOINT ["mvn", "spring-boot:run"]
+# Run the Spring Boot application
+ENTRYPOINT ["java", "-jar", "app.jar"]
