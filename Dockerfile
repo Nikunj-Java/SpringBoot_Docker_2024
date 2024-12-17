@@ -2,7 +2,8 @@
 FROM openjdk:17 AS build
 
 # Install Maven
-RUN apt-get update && apt-get install -y maven
+RUN apt-get update 
+RUN apt-get install maven
 
 # Copy project files
 COPY . /usr/src/app
