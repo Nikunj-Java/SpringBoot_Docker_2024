@@ -1,11 +1,21 @@
+# Use OpenJDK 17 image
+FROM openjdk:17 AS build
+
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
+# Copy project files
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+# Build project using Maven
+RUN mvn clean package
+
+# Run the jar
 FROM openjdk:17
-
-
-
-COPY ./target/SpringBoot_JDBC_Template-0.0.1-SNAPSHOT*.jar /usr/app/SpringBoot_JDBC_Template-0.0.1-SNAPSHOT.jar
+COPY --from=build /usr/src/app/target/SpringBoot_JDBC_Template-0.0.1-SNAPSHOT.jar /usr/app/app.jar
 
 WORKDIR /usr/app
-
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","SpringBoot_JDBC_Template-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
