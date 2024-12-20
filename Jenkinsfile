@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = "springboot-docker"
-        GITHUB_REPO = "https://github.com/Nikunj-Java/SpringBootCICD.git"
+        GITHUB_REPO = "https://github.com/Nikunj-Java/SpringBoot_Docker_2024.git"
     }
 
     stages {
