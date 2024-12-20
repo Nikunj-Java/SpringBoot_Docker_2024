@@ -1,14 +1,14 @@
-# Use OpenJDK as base image
+# Use an OpenJDK 17 image
 FROM openjdk:17-jdk-slim
 
-# Set the working directory
-WORKDIR /app
+# Set the working directory inside the container
+WORKDIR /usr/app
 
-# Copy the JAR file into the container
-COPY target/my-spring-app.jar app.jar
+# Copy the Spring Boot JAR file to the working directory
+COPY ./target/SpringBootCICD*.jar SpringBootCICD.jar
 
-# Expose application port
-EXPOSE 8080
+# Expose the application port
+EXPOSE 8082
 
-# Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Set the entry point to run the Spring Boot application
+ENTRYPOINT ["java", "-jar", "SpringBootCICD.jar"]
